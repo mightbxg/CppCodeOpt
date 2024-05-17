@@ -7,9 +7,18 @@ using namespace cv;
 using namespace std;
 using namespace chrono;
 
+// clang-format off
+// 这段代码是 OpenCV 中大津法 (OTSU) 求二值化阈值算法的一部分，
+// 执行的操作是先计算图像的灰度直方图，然后把像素值乘频数相加，得到图像像素值总和。
+// 由于图像中相邻像素很可能有相同的像素值，即 h[src[j + ?]] 很可能指向同一个内存单元,
+// 这种情况下循环中前后两条指令就无法利用流水线，只能串行执行。
+// 但如果使用 4 个 buffer，则可以确保循环中 4 条语句使用不同的内存单元,
+// 前一条语句进行加法操作时，后一条语句可以同时进行数据读取操作。
+// clang-format on
+
 template <bool ENABLE_UNROLL>
 static double pixCount(const Mat& image) {
-  constexpr int N = 256;
+  constexpr int N = 256;  // bin size
   constexpr int buff_size = ENABLE_UNROLL ? N * 4 : N;
   int i, j;
   std::array<int, buff_size> hBuf = {};
