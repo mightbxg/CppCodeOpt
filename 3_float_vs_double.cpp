@@ -2,10 +2,12 @@
 #include <iostream>
 #include <random>
 
+// clang-format off
 // float 代替 double 主要有两个好处：
 //   1. float 字节数只有 double 的一般，因此可以节省内存并降低网络传输的带宽需求
 //   2. 编译器会自动进行指令集加速，同一时间能进行的 float 计算数量是 double 的两倍
 // 但 float 有效精度远低于 double，使用时需注意数值归一化
+// clang-format on
 
 template <typename Func>
 double benchmark(unsigned samples, unsigned iterations, Func func) {
@@ -41,7 +43,7 @@ void VecSquare(const std::vector<T>& input, std::vector<T>& output) {
 }
 
 int main() {
-  const size_t N = 10000;
+  const size_t N = (1 << 14);  // 16384
   const unsigned samples = 5;
   const unsigned iter = 10000;
 
