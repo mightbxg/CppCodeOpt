@@ -13,3 +13,7 @@ add_executable(3_float_vs_double 3_float_vs_double.cpp)
 find_package(OpenCV REQUIRED)
 add_executable(4_pipelining 4_pipelining.cpp)
 target_link_libraries(4_pipelining ${OpenCV_LIBS})
+
+find_package(Threads)
+add_executable(5_crtp 5_crtp.cpp)
+target_link_libraries(5_crtp Threads::Threads)
