@@ -9,3 +9,7 @@ add_executable(1_enum 1_enum.cpp)
 add_executable(2_pass_by_value_and_move 2_pass_by_value_and_move.cpp)
 
 add_executable(3_float_vs_double 3_float_vs_double.cpp)
+
+find_package(OpenCV REQUIRED)
+add_executable(4_pipelining 4_pipelining.cpp)
+target_link_libraries(4_pipelining ${OpenCV_LIBS})
